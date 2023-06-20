@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Names of all group members" />
+<meta name="author" content="Daniel Gao" />
 
 
 <title>Initial EDA Basic Outline</title>
@@ -1748,7 +1748,7 @@ display: none;
 
 
 <h1 class="title toc-ignore">Initial EDA Basic Outline</h1>
-<h4 class="author">Names of all group members</h4>
+<h4 class="author">Daniel Gao</h4>
 
 </div>
 
@@ -1760,6 +1760,13 @@ project.</p>
 <div id="research-question" class="section level2">
 <h2>Research Question</h2>
 <p>State your specific research question and why it is interesting.</p>
+<p><strong>Introduction</strong></p>
+<p>The video game industry is growing and will continue to stay
+prominent. One industry that has grown from the rise of video games is
+electronic sports. Electrnoic sports, otherwise known as Esports, is the
+competitive aspect of video games, where players compete in tournament
+for a select game. What are the popularity differences between video
+games, and how do they vary in earnings?</p>
 </div>
 <div id="data-processing" class="section level2">
 <h2>Data Processing</h2>
@@ -1767,11 +1774,41 @@ project.</p>
 <h4>Data Intake</h4>
 <p>Include R code and written explanation to import your
 <strong>TWO</strong> data sets.</p>
+<p><strong>Importing The Data</strong> Both datasets “GenralEsportData”
+and “HistoricalEsportData” were taken from <a href="https://www.kaggle.com/datasets/rankirsh/esports-earnings">Kaggle.Com</a>.
+Since both datasets were csv files, a read.csv() function were used to
+read the two files. The result of each read function were then assigned
+to two dataframes “General” and “Historical” respectively.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuSGlzdG9yaWNhbCA8LSByZWFkLmNzdihcImZpbmFsLXByb2plY3QtZGFuaWVsLWdhby9HZW5lcmFsRXNwb3J0RGF0YS5jc3ZcIilcblxuYGBgIn0= -->
+<pre class="r"><code>Historical &lt;- read.csv(&quot;final-project-daniel-gao/GeneralEsportData.csv&quot;)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2FybmluZzogY2Fubm90IG9wZW4gZmlsZSAnZmluYWwtcHJvamVjdC1kYW5pZWwtZ2FvL0dlbmVyYWxFc3BvcnREYXRhLmNzdic6IE5vIHN1Y2ggZmlsZSBvciBkaXJlY3RvcnlFcnJvciBpbiBmaWxlKGZpbGUsIFwicnRcIikgOiBjYW5ub3Qgb3BlbiB0aGUgY29ubmVjdGlvblxuIn0= -->
+<pre><code>Warning: cannot open file &#39;final-project-daniel-gao/GeneralEsportData.csv&#39;: No such file or directoryError in file(file, &quot;rt&quot;) : cannot open the connection</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
 </div>
 <div id="data-wrangling" class="section level4">
 <h4>Data Wrangling</h4>
-<p>Include R code and written explanation for wangling your data (you
-can make multiple wrangled data sets).</p>
+<p>Write out the origin and purpose (who/what/when/where/why/how data
+were collected) Investigate and explain key variables (types, coding,
+missingness, summary statistics/plots) are clearly presented.
+<strong>Who</strong>:</p>
+<p><strong>What</strong>:</p>
+<p><strong>When</strong>:</p>
+<p><strong>Where</strong>:</p>
+<p><strong>Why</strong>:</p>
+<p><strong>How</strong>:</p>
+<p><strong>Case</strong>:</p>
+<p><strong>How was the data colletect</strong>: The creator obtain his
+data from <a href="https://www.esportsearnings.com/tournaments">Esports
+Earnings</a>. Esports Earning stated, “Sources include news articles,
+forum posts, live report threads, interviews, official statements,
+reliable databases, VODs and other publicly-accessable sources that
+preserve”historical” information.</p>
 </div>
 </div>
 <div id="data-visualization" class="section level2">
@@ -1800,7 +1837,7 @@ question is using the data sets and visualizations you created.</p>
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiSW5pdGlhbCBFREEgQmFzaWMgT3V0bGluZSIKYXV0aG9yOiAiTmFtZXMgb2YgYWxsIGdyb3VwIG1lbWJlcnMiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KClRoaXMgaXMgYW4gb3V0bGluZSBmb3IgeW91ciBJbml0aWFsIEVEQS4gWW91IGNhbiBmb2xsb3cgdGhpcyBvdXRsaW5lLCBvciB5b3UgY2FuIG1vZGlmeSBpdCBhcyB5b3Ugc2VlIGZpdC4gRG8gd2hhdCB3b3JrcyBiZXN0IGZvciB5b3VyIHByb2plY3QuIAoKIyMgUmVzZWFyY2ggUXVlc3Rpb24gCgpTdGF0ZSB5b3VyIHNwZWNpZmljIHJlc2VhcmNoIHF1ZXN0aW9uIGFuZCB3aHkgaXQgaXMgaW50ZXJlc3RpbmcuIAoKCgojIyBEYXRhIFByb2Nlc3NpbmcgCgojIyMjIERhdGEgSW50YWtlIAoKSW5jbHVkZSBSIGNvZGUgYW5kIHdyaXR0ZW4gZXhwbGFuYXRpb24gdG8gaW1wb3J0IHlvdXIgKipUV08qKiBkYXRhIHNldHMuCgojIyMjIERhdGEgV3JhbmdsaW5nIAoKSW5jbHVkZSBSIGNvZGUgYW5kIHdyaXR0ZW4gZXhwbGFuYXRpb24gZm9yIHdhbmdsaW5nIHlvdXIgZGF0YSAoeW91IGNhbiBtYWtlIG11bHRpcGxlIHdyYW5nbGVkIGRhdGEgc2V0cykuIAoKCgoKIyMgRGF0YSBWaXN1YWxpemF0aW9uCgojIyMjIFBsb3QgMQoKSW5jbHVkZSBSIGNvZGUgdG8gbWFrZSBvbmUgZGF0YSB2aXN1YWxpemF0aW9uIChJIHdvdWxkIGVuY291cmFnZSB5b3UgdG8gdXNlIDMgb3IgbW9yZSB2YXJpYWJsZXMpLiBJbmNsdWRlIGEgYnJpZWYgd3JpdHRlbiBkZXNjcmlwdGlvbiBvZiB3aGF0IHlvdXIgZ3JhcGggc2hvd3MuIElzIHRoaXMgZ3JhcGggaGVscGZ1bCBpbiBhbnN3ZXJpbmcgeW91ciByZXNlYXJjaCBxdWVzdGlvbj8gSWYgaXQgaXMgaGVscGZ1bCwgd2lsbCB5b3UgbmVlZCB0byBhZGQvbW9kaWZ5IGFueXRoaW5nIGluIHRoaXMgZ3JhcGggaW4gdGhlIGZpbmFsIHJlcG9ydD8gCgojIyMjIFBsb3QgMgoKSW5jbHVkZSBSIGNvZGUgdG8gbWFrZSBvbmUgZGF0YSB2aXN1YWxpemF0aW9uIChJIHdvdWxkIGVuY291cmFnZSB5b3UgdG8gdXNlIDMgb3IgbW9yZSB2YXJpYWJsZXMpLiBJbmNsdWRlIGEgYnJpZWYgd3JpdHRlbiBkZXNjcmlwdGlvbiBvZiB3aGF0IHlvdXIgZ3JhcGggc2hvd3MuIElzIHRoaXMgZ3JhcGggaGVscGZ1bCBpbiBhbnN3ZXJpbmcgeW91ciByZXNlYXJjaCBxdWVzdGlvbj8gSWYgaXQgaXMgaGVscGZ1bCwgd2lsbCB5b3UgbmVlZCB0byBhZGQvbW9kaWZ5IGFueXRoaW5nIGluIHRoaXMgZ3JhcGggaW4gdGhlIGZpbmFsIHJlcG9ydD8gCgoKIyMgQ29uY2x1c2lvbgoKSW5jbHVkZSB5b3VyIGluaXRpYWwgaW50dWl0aW9uIGFzIHRvIHdoYXQgdGhlIGFuc3dlciB0byB5b3VyIHJlc2VhcmNoIHF1ZXN0aW9uIGlzIHVzaW5nIHRoZSBkYXRhIHNldHMgYW5kIHZpc3VhbGl6YXRpb25zIHlvdSBjcmVhdGVkLiA=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiSW5pdGlhbCBFREEgQmFzaWMgT3V0bGluZSIKYXV0aG9yOiAiRGFuaWVsIEdhbyIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKVGhpcyBpcyBhbiBvdXRsaW5lIGZvciB5b3VyIEluaXRpYWwgRURBLiBZb3UgY2FuIGZvbGxvdyB0aGlzIG91dGxpbmUsIG9yIHlvdSBjYW4gbW9kaWZ5IGl0IGFzIHlvdSBzZWUgZml0LiBEbyB3aGF0IHdvcmtzIGJlc3QgZm9yIHlvdXIgcHJvamVjdC4gCgojIyBSZXNlYXJjaCBRdWVzdGlvbiAKClN0YXRlIHlvdXIgc3BlY2lmaWMgcmVzZWFyY2ggcXVlc3Rpb24gYW5kIHdoeSBpdCBpcyBpbnRlcmVzdGluZy4gCgoqKkludHJvZHVjdGlvbioqCgogIFRoZSB2aWRlbyBnYW1lIGluZHVzdHJ5IGlzIGdyb3dpbmcgYW5kIHdpbGwgY29udGludWUgdG8gc3RheSBwcm9taW5lbnQuIE9uZSBpbmR1c3RyeSB0aGF0IGhhcyBncm93biBmcm9tIHRoZSByaXNlIG9mIHZpZGVvIGdhbWVzIGlzIGVsZWN0cm9uaWMgc3BvcnRzLiBFbGVjdHJub2ljIHNwb3J0cywgb3RoZXJ3aXNlIGtub3duIGFzIEVzcG9ydHMsIGlzIHRoZSBjb21wZXRpdGl2ZSBhc3BlY3Qgb2YgdmlkZW8gZ2FtZXMsIHdoZXJlIHBsYXllcnMgY29tcGV0ZSBpbiB0b3VybmFtZW50IGZvciBhIHNlbGVjdCBnYW1lLiBXaGF0IGFyZSB0aGUgcG9wdWxhcml0eSBkaWZmZXJlbmNlcyBiZXR3ZWVuIHZpZGVvIGdhbWVzLCBhbmQgaG93IGRvIHRoZXkgdmFyeSBpbiBlYXJuaW5ncz8KCgojIyBEYXRhIFByb2Nlc3NpbmcgCgojIyMjIERhdGEgSW50YWtlIAoKSW5jbHVkZSBSIGNvZGUgYW5kIHdyaXR0ZW4gZXhwbGFuYXRpb24gdG8gaW1wb3J0IHlvdXIgKipUV08qKiBkYXRhIHNldHMuCgoqKkltcG9ydGluZyBUaGUgRGF0YSoqCkJvdGggZGF0YXNldHMgIkdlbnJhbEVzcG9ydERhdGEiIGFuZCAiSGlzdG9yaWNhbEVzcG9ydERhdGEiIHdlcmUgdGFrZW4gZnJvbSBbS2FnZ2xlLkNvbV0oaHR0cHM6Ly93d3cua2FnZ2xlLmNvbS9kYXRhc2V0cy9yYW5raXJzaC9lc3BvcnRzLWVhcm5pbmdzKS4gU2luY2UgYm90aCBkYXRhc2V0cyB3ZXJlIGNzdiBmaWxlcywgYSByZWFkLmNzdigpIGZ1bmN0aW9uIHdlcmUgdXNlZCB0byByZWFkIHRoZSB0d28gZmlsZXMuIFRoZSByZXN1bHQgb2YgZWFjaCByZWFkIGZ1bmN0aW9uIHdlcmUgdGhlbiBhc3NpZ25lZCB0byB0d28gZGF0YWZyYW1lcyAiR2VuZXJhbCIgYW5kICJIaXN0b3JpY2FsIiByZXNwZWN0aXZlbHkuCgpgYGB7cn0KR2VuZXJhbCA8LSByZWFkLmNzdigiR2VuZXJhbEVzcG9ydERhdGEuY3N2IikKSGlzdG9yaWNhbCA8LSByZWFkLmNzdigiSGlzdG9yaWNhbEVzcG9ydERhdGEuY3N2IikKYGBgCiMjIyMgRGF0YSBXcmFuZ2xpbmcgCgpXcml0ZSBvdXQgdGhlIG9yaWdpbiBhbmQgcHVycG9zZSAod2hvL3doYXQvd2hlbi93aGVyZS93aHkvaG93IGRhdGEgd2VyZSBjb2xsZWN0ZWQpCkludmVzdGlnYXRlIGFuZCBleHBsYWluIGtleSB2YXJpYWJsZXMgKHR5cGVzLCBjb2RpbmcsIG1pc3NpbmduZXNzLCBzdW1tYXJ5IHN0YXRpc3RpY3MvcGxvdHMpIGFyZSBjbGVhcmx5IHByZXNlbnRlZC4gCioqV2hvKio6IAoKKipXaGF0Kio6IAoKKipXaGVuKio6IAoKKipXaGVyZSoqOiAKCioqV2h5Kio6IAoKKipIb3cqKjogCgoqKkNhc2UqKjoKCioqSG93IHdhcyB0aGUgZGF0YSBjb2xsZXRlY3QqKjogVGhlIGNyZWF0b3Igb2J0YWluIGhpcyBkYXRhIGZyb20gW0VzcG9ydHMgRWFybmluZ3NdKGh0dHBzOi8vd3d3LmVzcG9ydHNlYXJuaW5ncy5jb20vdG91cm5hbWVudHMpLiBFc3BvcnRzIEVhcm5pbmcgc3RhdGVkLCAiU291cmNlcyBpbmNsdWRlIG5ld3MgYXJ0aWNsZXMsIGZvcnVtIHBvc3RzLCBsaXZlIHJlcG9ydCB0aHJlYWRzLCBpbnRlcnZpZXdzLCBvZmZpY2lhbCBzdGF0ZW1lbnRzLCByZWxpYWJsZSBkYXRhYmFzZXMsIFZPRHMgYW5kIG90aGVyIHB1YmxpY2x5LWFjY2Vzc2FibGUgc291cmNlcyB0aGF0IHByZXNlcnZlICJoaXN0b3JpY2FsIiBpbmZvcm1hdGlvbi4KCgojIyBEYXRhIFZpc3VhbGl6YXRpb24KCiMjIyMgUGxvdCAxCgpJbmNsdWRlIFIgY29kZSB0byBtYWtlIG9uZSBkYXRhIHZpc3VhbGl6YXRpb24gKEkgd291bGQgZW5jb3VyYWdlIHlvdSB0byB1c2UgMyBvciBtb3JlIHZhcmlhYmxlcykuIEluY2x1ZGUgYSBicmllZiB3cml0dGVuIGRlc2NyaXB0aW9uIG9mIHdoYXQgeW91ciBncmFwaCBzaG93cy4gSXMgdGhpcyBncmFwaCBoZWxwZnVsIGluIGFuc3dlcmluZyB5b3VyIHJlc2VhcmNoIHF1ZXN0aW9uPyBJZiBpdCBpcyBoZWxwZnVsLCB3aWxsIHlvdSBuZWVkIHRvIGFkZC9tb2RpZnkgYW55dGhpbmcgaW4gdGhpcyBncmFwaCBpbiB0aGUgZmluYWwgcmVwb3J0PyAKCiMjIyMgUGxvdCAyCgpJbmNsdWRlIFIgY29kZSB0byBtYWtlIG9uZSBkYXRhIHZpc3VhbGl6YXRpb24gKEkgd291bGQgZW5jb3VyYWdlIHlvdSB0byB1c2UgMyBvciBtb3JlIHZhcmlhYmxlcykuIEluY2x1ZGUgYSBicmllZiB3cml0dGVuIGRlc2NyaXB0aW9uIG9mIHdoYXQgeW91ciBncmFwaCBzaG93cy4gSXMgdGhpcyBncmFwaCBoZWxwZnVsIGluIGFuc3dlcmluZyB5b3VyIHJlc2VhcmNoIHF1ZXN0aW9uPyBJZiBpdCBpcyBoZWxwZnVsLCB3aWxsIHlvdSBuZWVkIHRvIGFkZC9tb2RpZnkgYW55dGhpbmcgaW4gdGhpcyBncmFwaCBpbiB0aGUgZmluYWwgcmVwb3J0PyAKCgojIyBDb25jbHVzaW9uCgpJbmNsdWRlIHlvdXIgaW5pdGlhbCBpbnR1aXRpb24gYXMgdG8gd2hhdCB0aGUgYW5zd2VyIHRvIHlvdXIgcmVzZWFyY2ggcXVlc3Rpb24gaXMgdXNpbmcgdGhlIGRhdGEgc2V0cyBhbmQgdmlzdWFsaXphdGlvbnMgeW91IGNyZWF0ZWQuIA==</div>
 
 
 
