@@ -10,7 +10,7 @@ How do video games differ in Esports based on earnings, players, and genre?
 
 **Introduction**
 
-The video game industry is growing and one industry that has grown alongside is electronic sports. Electronic sports, otherwise known as Esports, is the competitive aspect of video games where players compete professorially. Either in a team, or solo, these players compete against each other in tournaments.  
+The video game industry is growing and one industry that has grown alongside is electronic sports. Electronic sports, otherwise known as Esports, is the competitive aspect of video games where players compete professorially. Either in a team or solo, these players compete against each other in tournaments.  
 
 ## Data Processing 
 
@@ -18,18 +18,18 @@ The video game industry is growing and one industry that has grown alongside is 
 
 **Importing The Data**
 
-Both datasets "GenralEsportData" and "HistoricalEsportData" were taken from [Kaggle.Com](https://www.kaggle.com/datasets/rankirsh/esports-earnings). Since both datasets were csv files, a read.csv() function were used to read the two files. The result of each read function were then assigned to two dataframes "General" and "Historical" respectively.
+Both datasets "GenralEsportData" and "HistoricalEsportData" were taken from [Kaggle.com](https://www.kaggle.com/datasets/rankirsh/esports-earnings). Since both datasets were CSV files, a read.csv() function was used to read the two files. The results of each read function were then assigned to two data frames "General" and "Historical" respectively.
 ```{r}
 General <- read.csv("GeneralEsportData.csv")
 Historical <- read.csv("HistoricalEsportData.csv")
+library(tidyverse)
 ```
 
 #### Data Wrangling  
 
 **General Dataset**:
 
-The General dataset consist of generic data on each game. The dataset contains 5 variables: Game, ReleaseDate, Genre,
-TotalEarnings, OnlineEarnings, TotalPlayers, and TotalTournaments. There are a total of 631 cases. These cases represent a single distinct game. 
+The General dataset consists of generic data on each game. The dataset contains 5 variables: Game, ReleaseDate, Genre, TotalEarnings, OnlineEarnings, TotalPlayers, and TotalTournaments. There are a total of 631 cases. Each case represents a single distinct game. 
 ```{r}
 str(General)
 summary(General)
@@ -55,17 +55,16 @@ General %>%
   ylab("Total Earnings (Millions)")
 ```
 **Historical dataset**
-The Historical dataset consist of the earnings per month for every game. The dataset contains 5 variables: Date, Game, Earnings, Players, and Tournaments. There are a total of 8751 cases with each case representing the earning of a game for that month. 
+The Historical dataset consists of the earnings per month for every game. The dataset contains 5 variables: Date, Game, Earnings, Players, and Tournaments. There are a total of 8751 cases. Each case represents the earning of a game for that month. 
 ```{r}
 str(Historical)
-summary(Historical)
 ```
 ***A little more about the Historical dataset***
 There are no null values in this dataset.
 ```{r}
 colSums(is.na(Historical))
 ```
-According to the table and graph, the game with the highest earnings for all the tournaments was Dota 2 with a total earning of $315,065,846. The game with second highest earning is Fortnite $155,314,332. 
+According to the table and graph, the game with the highest earnings for all the tournaments was Dota 2 with a total earning of $315,065,846. The game with the second highest earning is Fortnite $155,314,332. 
 ```{r}
 Historical %>%
   group_by(Game) %>%
@@ -73,24 +72,33 @@ Historical %>%
   arrange(desc(Earnings)) %>%
   head()
 
-Historical %>% 
+Historical %>%
   ggplot(aes(x = Game, y = Earnings)) +
   geom_boxplot()
 ```
-**How was the data colletect**: The creator, Ran.Kirsh, obtain this data from [Esports Earnings](https://www.esportsearnings.com/tournaments). Esports Earning stated, "Sources include news articles, forum posts, live report threads, interviews, official statements, reliable databases, VODs and other publicly-accessable sources that preserve "historical" information.
-
+**How the data was colletecd**: The creator, Ran.Kirsh, obtain this data from [Esports Earnings](https://www.esportsearnings.com/tournaments). Esports Earning stated, "Sources include news articles, forum posts, live report threads, interviews, official statements, reliable databases, VODs, and other publicly-accessible sources that preserve "historical" information.
 
 ## Data Visualization
 
 #### Plot 1
-
-Include R code to make one data visualization (I would encourage you to use 3 or more variables). Include a brief written description of what your graph shows. Is this graph helpful in answering your research question? If it is helpful, will you need to add/modify anything in this graph in the final report? 
-
+This plot displays the top 6 games with the highest total players in all of their tournaments combined. The game with the highest total of players is Counter Strike Global Offensive. The game with the second-highest total player count is League of Legends. This graph does help in answering my research question, but I will need to modify this graph. The x-axis and y-axis do not are not refined.  
+```{r}
+General %>% 
+  arrange(desc(TotalPlayers)) %>%
+  head() %>%
+  ggplot(aes(x = Game, y = TotalPlayers, color = Genre)) +
+  geom_point(shape = "circle", size = 1)
+```
 #### Plot 2
-
-Include R code to make one data visualization (I would encourage you to use 3 or more variables). Include a brief written description of what your graph shows. Is this graph helpful in answering your research question? If it is helpful, will you need to add/modify anything in this graph in the final report? 
-
+This graph displays the top 6 games with the highest single tournament earning. Dota 2 held 5 tournaments with the highest earnings and Fortnite held 1 tournament with the highest earnings. This graph does help in answering my research question, but there are several things I would want to change from this graph. The first would be the y scale as the scale shows scientific notation.
+```{r}
+Historical %>%
+  arrange(desc(Earnings)) %>%
+  head() %>%
+ggplot(aes(x = Game, y = Earnings, color = Date)) +
+  geom_point(shape = "circle", size = 1)
+```
 
 ## Conclusion
 
-Include your initial intuition as to what the answer to your research question is using the data sets and visualizations you created. 
+The answer to my research question is a comparison between earnings, player, and genre. I have been diving into the differences between games in the Esports scene based on earnings, players, and genre. But I have not been able to fully utilize the two datasets in terms of joining the two datasets. I would like the create graph that displays the join also. The graphs are another objective I would like to work on. There some graphs that are not fully refined.
