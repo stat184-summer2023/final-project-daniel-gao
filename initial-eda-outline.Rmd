@@ -32,17 +32,17 @@ Historical <- read.csv("HistoricalEsportData.csv")
 
 Write out the origin and purpose (who/what/when/where/why/how data were collected)
 Investigate and explain key variables (types, coding, missingness, summary statistics/plots) are clearly presented. 
-**Who**: 
+**Who**: Each video games title 
 
-**What**: 
+**What**: The earnings for each tournament. 
 
-**When**: 
+**When**: The years are from 1998 to 2023.
 
-**Where**: 
+**Why**: The goal is to record the data for each Esport tournament.
 
-**Why**: 
+**Where**: The two datasets do not provide a location.
 
-**How**: 
+**How**: The data was collected from 
 
 **Case**:
 
