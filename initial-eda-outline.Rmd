@@ -4,49 +4,80 @@ author: "Daniel Gao"
 output: html_notebook
 ---
 
-This is an outline for your Initial EDA. You can follow this outline, or you can modify it as you see fit. Do what works best for your project. 
 
-## Research Question 
-
-State your specific research question and why it is interesting. 
+## Research Question: 
+How do video games differ in Esports based on earnings, players, and genre? 
 
 **Introduction**
 
-  The video game industry is growing and will continue to stay prominent. One industry that has grown from the rise of video games is electronic sports. Electrnoic sports, otherwise known as Esports, is the competitive aspect of video games, where players compete in tournament for a select game. What are the popularity differences between video games, and how do they vary in earnings?
-
+The video game industry is growing and one industry that has grown alongside is electronic sports. Electronic sports, otherwise known as Esports, is the competitive aspect of video games where players compete professorially. Either in a team, or solo, these players compete against each other in tournaments.  
 
 ## Data Processing 
 
 #### Data Intake 
 
-Include R code and written explanation to import your **TWO** data sets.
-
 **Importing The Data**
-Both datasets "GenralEsportData" and "HistoricalEsportData" were taken from [Kaggle.Com](https://www.kaggle.com/datasets/rankirsh/esports-earnings). Since both datasets were csv files, a read.csv() function were used to read the two files. The result of each read function were then assigned to two dataframes "General" and "Historical" respectively.
 
+Both datasets "GenralEsportData" and "HistoricalEsportData" were taken from [Kaggle.Com](https://www.kaggle.com/datasets/rankirsh/esports-earnings). Since both datasets were csv files, a read.csv() function were used to read the two files. The result of each read function were then assigned to two dataframes "General" and "Historical" respectively.
 ```{r}
 General <- read.csv("GeneralEsportData.csv")
 Historical <- read.csv("HistoricalEsportData.csv")
 ```
-#### Data Wrangling 
 
-Write out the origin and purpose (who/what/when/where/why/how data were collected)
-Investigate and explain key variables (types, coding, missingness, summary statistics/plots) are clearly presented. 
-**Who**: Each video games title 
+#### Data Wrangling  
 
-**What**: The earnings for each tournament. 
+**General Dataset**:
 
-**When**: The years are from 1998 to 2023.
+The General dataset consist of generic data on each game. The dataset contains 5 variables: Game, ReleaseDate, Genre,
+TotalEarnings, OnlineEarnings, TotalPlayers, and TotalTournaments. There are a total of 631 cases. These cases represent a single distinct game. 
+```{r}
+str(General)
+summary(General)
+```
 
-**Why**: The goal is to record the data for each Esport tournament.
+**A little more about the General dataset**:
 
-**Where**: The two datasets do not provide a location.
+There are no null values in this data.
+```{r}
+colSums(is.na(General))
+```
+According to the table and graph, the genre with the highest earning is Multiplayer Online Battle Arena with a total earning of $540,062,582. The genre with the second high earning is First-Pesron Shooter with a total earning of $380,906,784. 
+```{r}
+General %>% 
+  group_by(Genre) %>%
+  summarise(TotalEarnings = sum(TotalEarnings)) %>%
+  arrange(desc(TotalEarnings)) %>%
+  head()
 
-**How**: The data was collected from 
+General %>% 
+  ggplot(aes(x = Genre, y = TotalEarnings/1000000)) +
+  geom_boxplot() +
+  ylab("Total Earnings (Millions)")
+```
+**Historical dataset**
+The Historical dataset consist of the earnings per month for every game. The dataset contains 5 variables: Date, Game, Earnings, Players, and Tournaments. There are a total of 8751 cases with each case representing the earning of a game for that month. 
+```{r}
+str(Historical)
+summary(Historical)
+```
+***A little more about the Historical dataset***
+There are no null values in this dataset.
+```{r}
+colSums(is.na(Historical))
+```
+According to the table and graph, the game with the highest earnings for all the tournaments was Dota 2 with a total earning of $315,065,846. The game with second highest earning is Fortnite $155,314,332. 
+```{r}
+Historical %>%
+  group_by(Game) %>%
+  summarise(Earnings = sum(Earnings)) %>%
+  arrange(desc(Earnings)) %>%
+  head()
 
-**Case**:
-
-**How was the data colletect**: The creator obtain his data from [Esports Earnings](https://www.esportsearnings.com/tournaments). Esports Earning stated, "Sources include news articles, forum posts, live report threads, interviews, official statements, reliable databases, VODs and other publicly-accessable sources that preserve "historical" information.
+Historical %>% 
+  ggplot(aes(x = Game, y = Earnings)) +
+  geom_boxplot()
+```
+**How was the data colletect**: The creator, Ran.Kirsh, obtain this data from [Esports Earnings](https://www.esportsearnings.com/tournaments). Esports Earning stated, "Sources include news articles, forum posts, live report threads, interviews, official statements, reliable databases, VODs and other publicly-accessable sources that preserve "historical" information.
 
 
 ## Data Visualization
