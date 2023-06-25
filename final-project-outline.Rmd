@@ -1,37 +1,99 @@
 ---
 title: "Final Project Basic Outline"
-author: "Names of all group members"
+author: "Daniel Gao"
+date: June 26, 2023
 output: html_notebook
 ---
 
-This is an outline for your final project. You can follow this outline, or you can modify it as you see fit. Do what works best for your project. 
+**Research Question:** 
+How do video games differ in Esports based on earnings, players, and genre? 
 
-## Research Question 
+## Introduction 
 
-State your general specific question and why it is interesting. 
-
-
+The video game industry is growing and one industry that has grown alongside is electronic sports. Electronic sports, otherwise known as Esports, is the competitive aspect of video games where players compete professionally. Either in a team or solo, these players compete against each other in tournaments.
 
 ## Data Processing 
 
 #### Data Intake 
 
-Include R code and written explanation to import your **TWO** data sets.
+This project contains two datasets. Both datasets GeneralEsportData and HistoricalEsportData were taken from [Kaggle.com](https://www.kaggle.com/datasets/rankirsh/esports-earnings). Since both datasets were CSV files, a read.csv() function was used to read the two files. 
+```{r}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+General <- read.csv("GeneralEsportData.csv")
+Historical <- read.csv("HistoricalEsportData.csv")
+```
+The results of each read function were then assigned to two data frames "General" and "Historical" respectively.
 
 #### Data Wrangling 
+ 
+**General Dataset:**
+The General dataset consists of generic data on each game. The dataset contains 5 variables: Game, ReleaseDate, Genre, TotalEarnings, OnlineEarnings, TotalPlayers, and TotalTournaments. There are a total of 631 cases. Each case represents a earnings a game since the game's release date.
+```{r}
+str(General)
+```
+**Historical dataset:**
+The Historical dataset consists of the earnings per month for every game. The dataset contains 5 variables: Date, Game, Earnings, Players, and Tournaments. There are a total of 8751 cases. Each case represents the earnings of a game for a month. 
+```{r}
+str(Historical)
+```
 
-Include R code and written explanation for wangling your data (you can make multiple wrangled data sets). 
+###Research Questions
+To answer the research question on how video games differ in Esports based on earnings, players, and genre, an exploration of the two datasets is needed. 
+**What are the top 3 genres with the highest total Esports earnings?**
+```{r}
+EGenre <-
+  General %>% 
+  group_by(Genre) %>%
+  summarise(TotalEarnings = sum(TotalEarnings, na.rm = FALSE)) %>%
+  arrange(desc(TotalEarnings)) %>%
+  head(3)
+
+EGenre %>%
+  dplyr::select(Genre, TotalEarnings) %>%
+  knitr::kable(caption = "Earnings Per Genre") %>%
+  kableExtra::kable_styling()
+```
+**Result:** The highest earning genre is Multiplayer Online Battle Arena with a total earning of $540,062,582. The genre with the second highest earning is First-Person Shooter with a total earning of $380,906,784. And the genre with the third highest earning is Battle Royale with a total earning of $306,857,313.
 
 
+**What are the games with the highest earnings?**
+```{r}
+EGame <-
+  Historical %>%
+  group_by(Game) %>%
+  summarise(Earnings = sum(Earnings)) %>%
+  arrange(desc(Earnings)) %>%
+  rename("Total Earnings" = `Earnings`) %>%
+  head(3)
 
+EGame %>%
+  dplyr::select(Game, `Total Earnings`) %>%
+  knitr::kable(caption = "Earnings Per Gamee") %>%
+  kableExtra::kable_styling()
+```
+
+**What were the top 10 games with the highest single month earning? What were the genres and what were the dates?**
+
+```{r}
+HistoricalGeneral <- 
+  inner_join(Historical, General, by = "Game")
+hg <- subset(df1, select = -c(`ReleaseDate`, `TotalEarnings`, `OnlineEarnings`, `TotalPlayers`, `TotalTournaments`))
+
+hg %>%
+  select(`Game`, `Earnings`, `Genre`, `Date`) %>%
+  arrange(desc(`Earnings`)) %>%
+  head(10) %>% 
+  dplyr::select(Game, `Earnings`, `Genre`, `Date`) %>%
+  knitr::kable(caption = "Top 10") %>%
+  kableExtra::kable_styling()
+```
 
 ## Data Visualization
 
-Include R code and written explanation for your data visualization(s) with at least 3 variables. You must have **at least** one graph. You may have more than one (I would encourage you to have more than one). 
 
 
 
 
 ## Conclusion
-
-Answer your research question using the data sets and visualizations you created. 
