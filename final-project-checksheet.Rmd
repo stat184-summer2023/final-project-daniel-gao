@@ -1,6 +1,6 @@
 ---
 title: 'Final Project: Guidance Document and Checksheet'
-author: "Author Name(s)"
+author: "Daniel Gao"
 date: "Due June 26, 2023"
 output:  html_notebook
 ---
@@ -24,9 +24,15 @@ The official rubric can be found on the "Submit Final Project Report" on Canvas.
 
 (A) .Rmd Line numbers where at least two different data sources are imported:  
 
+**Line 25**
+
+**Line 26** 
 
 (B) .Rmd Line numbers for inspecting data intake:  
 
+**Line 35**
+
+**Line 40**
 
 ### Data Wrangling (5 out of 7 required)
 
@@ -35,20 +41,34 @@ The official rubric can be found on the "Submit Final Project Report" on Canvas.
 
 (A) .Rmd Line number(s) for general data wrangling: 
 
+**Line 50- Line 58** - contains select, group_by, summarise, mutate
+
+**Line 68 - 76** - replica of line 50-58
 
 (B) .Rmd Line number(s) for a join operation: 
 
+**Line 100**  
 
 (C) .Rmd Line number(s) for use of reduction and/or transformation functions: 
+
+**Line 53 -Line 54** - sum() function
 
 (D) .Rmd Line number(s) for a pivot_wider or pivot_longer operation (or equivalent):
 
 
 (E) .Rmd Line number(s) for use of regular expressions: 
 
+**Line 57** - gsub 
+
+**Line 75 - gsub
+
+**Line 108** - gsub
 
 (F) .Rmd Line number(s) for use of user-defined functions: 
 
+**Line 49** 
+
+**Line 67**
 
 (G) .Rmd Line number(s) for use of loops and/or control flow: 
 
@@ -62,9 +82,17 @@ The official rubric can be found on the "Submit Final Project Report" on Canvas.
 
 (A) .Rmd Line number(s) for use of multiple different geoms on a single plot:  
 
+**Line 142-143** 
+
 (B) .Rmd Line number(s) for use of multiple aesthetics:  
 
+**Line 141**
+
+**Line 155**
+
 (C) .Rmd Line number(s) for use of layered graphics:  
+
+**Line 142-143**
 
 (D) .Rmd Line number(s) for use of maps:  
 
