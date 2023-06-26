@@ -6,7 +6,7 @@ output: html_notebook
 ---
 
 **Research Question:** 
-How do video games differ in Esports based on earnings, players, and genre? 
+How do video games genres differ in Esports based on earnings, players?
 
 ## Introduction 
 
@@ -21,79 +21,156 @@ This project contains two datasets. Both datasets GeneralEsportData and Historic
 library(tidyverse)
 library(knitr)
 library(kableExtra)
-General <- read.csv("GeneralEsportData.csv")
-Historical <- read.csv("HistoricalEsportData.csv")
+library(lubridate)
+General <- read.csv("GeneralEsportData.csv") #relative filepath
+Historical <- read.csv("HistoricalEsportData.csv") #relative filepath
 ```
 The results of each read function were then assigned to two data frames "General" and "Historical" respectively.
 
 #### Data Wrangling 
  
 **General Dataset:**
-The General dataset consists of generic data on each game. The dataset contains 5 variables: Game, ReleaseDate, Genre, TotalEarnings, OnlineEarnings, TotalPlayers, and TotalTournaments. There are a total of 631 cases. Each case represents a earnings a game since the game's release date.
+The General dataset consists of generic data on each game. The dataset contains 5 variables: Game, ReleaseDate, Genre, TotalEarnings, OnlineEarnings, TotalPlayers, and TotalTournaments. There are a total of 631 cases. Each case represents a total earnings a game since the its release date.
 ```{r}
 str(General)
 ```
 **Historical dataset:**
-The Historical dataset consists of the earnings per month for every game. The dataset contains 5 variables: Date, Game, Earnings, Players, and Tournaments. There are a total of 8751 cases. Each case represents the earnings of a game for a month. 
+The Historical dataset consists of the earnings per month for every game. The dataset contains 5 variables: Date, Game, Earnings, Players, and Tournaments. There are a total of 8,751 cases. Each case represents the earnings of a game for a month since Jan 1st, 1998 to April 1, 2023. 
 ```{r}
 str(Historical)
 ```
 
-###Research Questions
-To answer the research question on how video games differ in Esports based on earnings, players, and genre, an exploration of the two datasets is needed. 
-**What are the top 3 genres with the highest total Esports earnings?**
-```{r}
-EGenre <-
-  General %>% 
-  group_by(Genre) %>%
-  summarise(TotalEarnings = sum(TotalEarnings, na.rm = FALSE)) %>%
-  arrange(desc(TotalEarnings)) %>%
-  head(3)
+#### Research Questions
+To answer the research question on how video game genres differ in Esports based on earnings, and players, an exploration of the two datasets is needed. 
 
-EGenre %>%
-  dplyr::select(Genre, TotalEarnings) %>%
-  knitr::kable(caption = "Earnings Per Genre") %>%
-  kableExtra::kable_styling()
+**What are the genres in Esports? What are each genre's total earnings and total player count?**
+```{r}
+#for descending, i dont know how to do it in one function
+general_desc <- function(results = NULL) { #general_function for multi-use, "results" so I can alter the results table
+  General %>%
+    select(Genre, TotalEarnings, TotalPlayers) %>%    #dont know if this is needed or not cause of dplyr::select
+    group_by(Genre) %>% 
+    summarise(TotalEarnings = sum(TotalEarnings), #sum of total earnings per genre
+              TotalPlayers = sum(TotalPlayers)) %>% #sum of total players per genre
+    arrange(desc(TotalEarnings)) %>%
+    mutate(TotalEarnings = paste("$", format(TotalEarnings, big.mark = ","))) %>% #mutate to add $ and comma for money
+    mutate(TotalEarnings = gsub("\\s+", "", TotalEarnings)) %>% #there was white space, this mutate deletes them
+    mutate(TotalPlayers = paste(format(TotalPlayers, big.mark = ","))) %>% #comma for players
+    dplyr::select(Genre, TotalEarnings, TotalPlayers) %>% #makes the result table better for view ability
+    rename("Total Earning" = TotalEarnings) %>% #rename
+    rename("Total Players" = TotalPlayers) %>% #rename 
+    head(results) %>% #where results sits so I can alter the results table
+    knitr::kable(caption = "Genres in Esports (Based on Earnings)") %>% 
+    kableExtra::kable_styling()
+}
+#for ascending, i don't know how to do it in one function
+general_asc <- function(results = NULL) { #rename
+  General %>%
+    select(Genre, TotalEarnings, TotalPlayers) %>% #dont know if this is needed or not cause of dplyr::select
+    group_by(Genre) %>% 
+    summarise(TotalEarnings = sum(TotalEarnings), 
+              TotalPlayers = sum(TotalPlayers)) %>% 
+    arrange(TotalEarnings) %>%                                                         ##only line this was changed
+    mutate(TotalEarnings = paste("$", format(TotalEarnings, big.mark = ","))) %>% 
+    mutate(TotalEarnings = gsub("\\s+", "", TotalEarnings)) %>% 
+    mutate(TotalPlayers = paste(format(TotalPlayers, big.mark = ","))) %>% 
+    dplyr::select(Genre, TotalEarnings, TotalPlayers) %>% 
+    rename("Total Earning" = TotalEarnings) %>%
+    rename("Total Players" = TotalPlayers) %>% 
+    head(results) %>% 
+    knitr::kable(caption = "Genres in Esports (Based on Earnings)") %>% 
+    kableExtra::kable_styling()
+}
+
+general_desc(results = 12)
+
 ```
-**Result:** The highest earning genre is Multiplayer Online Battle Arena with a total earning of $540,062,582. The genre with the second highest earning is First-Person Shooter with a total earning of $380,906,784. And the genre with the third highest earning is Battle Royale with a total earning of $306,857,313.
-
-
-**What are the games with the highest earnings?**
+**Result:** In the Genres in Esports table, there consist of a total of 12 total genres. Each genre varies in total earning and popularity based on total player count for all of each genres tournaments, The genre with the highest total earning is Multiplayer Online Battle Arena with a total earning $540,062,581.76 and a total player count of 22,955 players.
 ```{r}
-EGame <-
-  Historical %>%
-  group_by(Game) %>%
-  summarise(Earnings = sum(Earnings)) %>%
-  arrange(desc(Earnings)) %>%
-  rename("Total Earnings" = `Earnings`) %>%
-  head(3)
-
-EGame %>%
-  dplyr::select(Game, `Total Earnings`) %>%
-  knitr::kable(caption = "Earnings Per Gamee") %>%
-  kableExtra::kable_styling()
+general_desc(results = 1)
 ```
 
-**What were the top 10 games with the highest single month earning? What were the genres and what were the dates?**
+**Results**: The genre with the lowest total earning is Puzzle Game with a total earning of $74,576.89 with a total player count of 225 players. The differences between the top and bottom genres varies greatly. The difference between total earning and total players for Multiplayer Online battle Arena and Puzzle Game is $539,988,004.87 and 22,955, respectively. 
+```{r}
+general_asc(results = 1)
+```
+
+**What were the top 10 games with the highest single month earning? What were the earning, genres, and dates?**
 
 ```{r}
-HistoricalGeneral <- 
+HistoricalGeneral <- #joined the Historical and General table cause ymd was needed
   inner_join(Historical, General, by = "Game")
-hg <- subset(df1, select = -c(`ReleaseDate`, `TotalEarnings`, `OnlineEarnings`, `TotalPlayers`, `TotalTournaments`))
 
+#new dataframe so i can reference old one in case of trouble
+hg <- subset(HistoricalGeneral, select = -c(ReleaseDate, TotalEarnings, OnlineEarnings, TotalPlayers, TotalTournaments)) #delete the columns not needed 
 hg %>%
-  select(`Game`, `Earnings`, `Genre`, `Date`) %>%
-  arrange(desc(`Earnings`)) %>%
+  select(Game, Earnings, Genre, Date) %>%
+  arrange(desc(Earnings)) %>%
+  mutate(Earnings = paste("$", format(Earnings, big.mark = ","))) %>% 
+  mutate(Earnings = gsub("\\s+", "", Earnings)) %>% 
+  dplyr::select(Game, Earnings, Genre, Date) %>% #makes the tables into nicer tables
   head(10) %>% 
-  dplyr::select(Game, `Earnings`, `Genre`, `Date`) %>%
   knitr::kable(caption = "Top 10") %>%
+  kableExtra::kable_styling()
+
+```
+**Results** The results of this table shows how a single game can dominate in the most earnings within a single month. Dota 2, a game in the Multiplayer Online Battle Arean, appears 7 times in the top 10 games with the highest single month earnings. Fortnite, a game in the battle royale, appears 2 times out of the top 10. Arena of Valor, a game in the Multiplayer Online Battle Arena genre, appears once. Looking a little deeper into the Multiplayer Online Battle Arena, it appears that Dota 2 represent more than halve of the earnings in that genre. Dota 2 
+
+```{r}
+hg %>%
+  select(Game, Earnings, Genre) %>%
+  group_by(Game, Genre) %>% #group by game and genre is needed 
+  summarise(Earnings = sum(Earnings)) %>%
+  filter(Genre == "Multiplayer Online Battle Arena") %>%
+  arrange(desc(Earnings)) %>%
+  mutate(Earnings = paste("$", format(Earnings, big.mark = ","))) %>% 
+  mutate(Earnings = gsub("\\s+", "", Earnings)) %>% 
+  dplyr::select(Game, Earnings, Genre) %>% 
+  head(10) %>% 
+  knitr::kable(caption = "Top 10") %>% 
   kableExtra::kable_styling()
 ```
 
 ## Data Visualization
+```{r}
+General %>%
+  select(Genre, TotalEarnings, TotalPlayers) %>%
+  group_by(Genre) %>% 
+  summarise(TotalEarnings = sum(TotalEarnings), #sum of total earnings per genre
+              TotalPlayers = sum(TotalPlayers)) %>% #sum of total players per genre
+  arrange(desc(TotalEarnings)) %>%
+  ggplot(aes(x = Genre, y = TotalEarnings)) +
+  geom_col(fill = "pink")
 
 
+testdate <- hg
+testdate$Date <- ymd(testdate$Date)
+testdate %>% 
+  mutate(Year = format(Date, "%Y")) %>%
+  group_by(Genre, Year) %>%
+  summarise(Earnings = sum(Earnings)/1000000) %>%
+  filter(Year %in% c(2010:2023)) %>%
+  ggplot(aes(x = Year, y = Earnings, color = Genre, group = Genre)) +
+  geom_line() +
+  geom_point() +
+  ggtitle("Genre Earning Per Year (Last 10 Years)") +
+  ylab("Earnings (Millions)")
+```
+This graph depicts the earnings of genres for the last ten years.Throughout the years, there are rise in earnings from all genres, but genres such as Battle Royale, Mutiplayer Online Battle Arena, and First-Person Shooter had an exponential increase in earnings. Compared the other genres, these three genres make up a notable difference for the earnings of all of the genres.
 
+```{r}
+testdate %>% 
+  mutate(Year = format(Date, "%Y")) %>%
+  group_by(Genre, Year) %>%
+  summarise(Players = sum(Players)) %>%
+  filter(Year %in% c(2010:2023)) %>%
+  ggplot(aes(x = Year, y = Players, color = Genre, fill = Genre)) +
+  geom_col() +
+  ggtitle("Genre Player Total By Years") +
+  ylab("Number of Players")
 
+```
+This graph displays the total players genre based on years. Although Multiplayer Online Battle Arena has more total earnings, the genre with the most consistent highest total players is First-Person Shooters. In 2019 and 2023, there can be seen a rise in player count in the Battle Royale genre.
 
 ## Conclusion
+The difference between video game genres varies based on earnings and player count. Throughout the years, there can be seen a 
